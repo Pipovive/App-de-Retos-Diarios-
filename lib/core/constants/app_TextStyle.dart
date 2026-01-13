@@ -43,4 +43,11 @@ class AppTextstyle {
     fontWeight: FontWeight.bold,
     fontFamily: 'Monserrat',
   );
+
+  static const TextStyle bodyTertiaryText = TextStyle(
+    color: AppColors.buttomColor,
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Monserrat',
+  );
 }

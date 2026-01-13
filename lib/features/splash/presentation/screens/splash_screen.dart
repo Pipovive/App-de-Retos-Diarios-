@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:test_app/core/constants/app_TextStyle.dart';
 import 'package:test_app/core/constants/app_colors.dart';
+import 'package:test_app/routes/app_routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,39 +18,47 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
     _pageController = PageController(initialPage: 0);
-    _pageController.addListener(() {
+    _pageController.addListener(_onPageChanged);
+  }
+
+  void _onPageChanged() {
+    if (mounted) {
       setState(() {
         _currentPage = _pageController.page?.round() ?? 0;
       });
-    });
+    }
   }
 
   @override
   void dispose() {
-    super.dispose();
+    _pageController.removeListener(_onPageChanged);
     _pageController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: AppColors.backgroundPrimaryColor, // color barra
+        statusBarIconBrightness: Brightness.light, // iconos oscuros
+        statusBarBrightness: Brightness.light, // iOS
+      ),
+    );
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.backgroundSecondaryColor,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+      body: SafeArea(
+        child: Stack(
           children: [
-            Title(
-              color: AppColors.backgroundPrimaryColor,
-              child: Text("Splash-Screen", style: AppTextstyle.bodyText),
+            // PageView con todas las páginas
+            PageView(
+              controller: _pageController,
+              children: [_buildPage1(), _buildPage2(), _buildPage3()],
             ),
+
+            // Imagen flotante por encima de todo
           ],
         ),
-      ),
-      body: PageView(
-        controller: _pageController,
-        children: [_buildPage1(), _buildPage2(), _buildPage3()],
       ),
     );
   }
@@ -79,9 +89,12 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(height: 100),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [_buildDot(0), _buildDot(1), _buildDot(2)],
+              child: SizedBox(
+                width: 100,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [_buildDot(0), _buildDot(1), _buildDot(2)],
+                ),
               ),
             ),
           ],
@@ -110,15 +123,18 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             Text(
-              "Entrena tu mente, un reto al día.",
+              "Resuelve retos diarios de matemáticas, lógica.",
               style: AppTextstyle.bodyText,
             ),
             SizedBox(height: 100),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [_buildDot(0), _buildDot(1), _buildDot(2)],
+              child: SizedBox(
+                width: 100,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [_buildDot(0), _buildDot(1), _buildDot(2)],
+                ),
               ),
             ),
           ],
@@ -146,29 +162,31 @@ class _SplashScreenState extends State<SplashScreen> {
                 ],
               ),
             ),
-            Text(
-              "Entrena tu mente, un reto al día.",
-              style: AppTextstyle.bodyText,
-            ),
+            Text("Solo te tomará unos minutos.", style: AppTextstyle.bodyText),
             SizedBox(height: 58),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildDot(0),
-                  _buildDot(1),
-                  _buildDot(2),
+                  SizedBox(
+                    width: 100,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [_buildDot(0), _buildDot(1), _buildDot(2)],
+                    ),
+                  ),
+
                   ElevatedButton(
-                    onPressed: () => {},
-              
+                    onPressed: () =>
+                        Navigator.pushNamed(context, AppRoutes.login),
                     style: ElevatedButton.styleFrom(
                       shape: const CircleBorder(),
                       padding: const EdgeInsets.all(44),
                       backgroundColor: AppColors.buttomColor,
                     ),
                     child: Text(
-                      "data",
+                      "Empezar",
                       style: AppTextstyle.subTitleSecondaryText,
                     ),
                   ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/features/splash/presentation/screens/splash_screen.dart';
+import 'package:test_app/routes/app_routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,8 +15,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      initialRoute: AppRoutes.splash,
+      routes: AppRoutes.routes,
+      home: SplashScreen(),
       theme: ThemeData(useMaterial3: true, scaffoldBackgroundColor: AppColors.backgroundSecondaryColor),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
