@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.add))
         ],
-
+        // hoy no tengo muchas ganas de programar, soryy
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: AppColors.backgroundPrimaryColor,
           statusBarIconBrightness: Brightness.light, // iconos CLAROS (light = oscuros, dark = claros)
