@@ -4,38 +4,65 @@ import 'package:test_app/core/constants/app_colors.dart';
 
 class CustomHeadButton extends StatelessWidget {
   final String title;
-  final bool showback;
-  final List<Widget>? actions;
+  final VoidCallback onPressed;
+  final List<Widget> children;
+
   const CustomHeadButton({
     super.key,
     required this.title,
-    this.showback = false,
-    this.actions,
+    required this.onPressed,
+    required this.children,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false,
-      toolbarHeight: 100,
-      actions: actions,
-      backgroundColor: AppColors.backgroundPrimaryColor,
-      elevation: 0,
-      leading: showback
-          ? IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: Icon(Icons.arrow_back),
-              color: AppColors.backgroundSecondaryColor,
-            )
-          : null,
-      title: Text(title, style: AppTextstyle.subTitleSecondaryText),
-      actionsIconTheme: IconThemeData(),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(32), // Borde circular abajo izquierda
-          bottomRight: Radius.circular(32), // Borde circular abajo derecha
-        ),
+        borderRadius: BorderRadius.only( 
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30)
+           )
       ),
+      backgroundColor: AppColors.backgroundPrimaryColor,
+      automaticallyImplyLeading: false,
+      titleSpacing: 0,
+      title: Padding(
+        padding: const EdgeInsets.only(top: 40, left: 20),
+        child: Text(title, style: AppTextstyle.subTitleSecondaryText),
+      ),
+      actions: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top: 25, right: 20),
+          child: IconButton(
+            onPressed: onPressed,
+            icon: Icon(Icons.add),
+            color: AppColors.backgroundSecondaryColor,
+          ),
+        ),
+      ],
+      flexibleSpace: children.isEmpty
+          ? null
+          : Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Positioned(
+                  bottom: -60,
+                  left: 16,
+                  right: 0,
+                  child: SizedBox(
+                    height: 120,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      physics: BouncingScrollPhysics(),
+                      child: Row(
+                        children: children,
+                      ),
+                      
+                    ),
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }
