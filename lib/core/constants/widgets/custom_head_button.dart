@@ -18,21 +18,21 @@ class CustomHeadButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only( 
+        borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(30),
-          bottomRight: Radius.circular(30)
-           )
+          bottomRight: Radius.circular(30),
+        ),
       ),
       backgroundColor: AppColors.backgroundPrimaryColor,
       automaticallyImplyLeading: false,
       titleSpacing: 0,
       title: Padding(
-        padding: const EdgeInsets.only(top: 40, left: 20),
+        padding: const EdgeInsets.only(top: 32, left: 20),
         child: Text(title, style: AppTextstyle.subTitleSecondaryText),
       ),
       actions: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 25, right: 20),
+          padding: const EdgeInsets.only(top: 22, right: 20),
           child: IconButton(
             onPressed: onPressed,
             icon: Icon(Icons.add),
@@ -46,18 +46,15 @@ class CustomHeadButton extends StatelessWidget {
               clipBehavior: Clip.none,
               children: [
                 Positioned(
-                  bottom: -60,
+                  bottom: -70,
                   left: 16,
                   right: 0,
                   child: SizedBox(
-                    height: 120,
+                    height: 140,
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       physics: BouncingScrollPhysics(),
-                      child: Row(
-                        children: children,
-                      ),
-                      
+                      child: Row(children: children),
                     ),
                   ),
                 ),

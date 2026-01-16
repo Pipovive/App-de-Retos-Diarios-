@@ -33,7 +33,7 @@ class AppTextstyle {
    static const TextStyle subTitleSecondaryText = TextStyle(
     color: AppColors.backgroundSecondaryColor,
     fontSize: 20,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w500,
     fontFamily: 'Monserrat',
   );
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/core/constants/app_TextStyle.dart';
+import 'package:test_app/core/constants/app_colors.dart';
 
 class AvatarButton extends StatelessWidget {
   final String label;
@@ -18,49 +20,68 @@ class AvatarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final displayImage =
-        isSelected && selectedImage != null ? selectedImage! : image;
+    final displayImage = isSelected && selectedImage != null
+        ? selectedImage!
+        : image;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Material(
-          color: Colors.transparent,
-          shape: const CircleBorder(),
-          child: InkWell(
-            onTap: onTap,
-            customBorder: const CircleBorder(),
-            child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: isSelected
-                      ? Colors.blue
-                      : Colors.transparent,
-                  width: 3,
+        Container(
+          decoration: BoxDecoration(
+            color: AppColors.backgroundSecondaryColor,
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: AppColors.backgroundSecondaryColor,
+              width: 6,
+            ),
+          ),
+          child: Material(
+            color: AppColors.backgroundSecondaryColor,
+            shape: const CircleBorder(),
+            child: InkWell(
+              onTap: onTap,
+              customBorder: const CircleBorder(),
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: isSelected
+                        ? AppColors.backgroundPrimaryColor
+                        : AppColors.buttomColor,
+                    width: 3,
+                  ),
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(6),
-                child: ClipOval(
+                child: Padding(
+                  padding: const EdgeInsets.all(1),
                   child: Image.asset(
                     displayImage,
-                    width: 72,
-                    height: 72,
-                    fit: BoxFit.cover,
+                    width: 94,
+                    height: 94,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
             ),
           ),
         ),
-        const SizedBox(height: 6),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight:
-                isSelected ? FontWeight.bold : FontWeight.normal,
+
+        Container(
+          decoration: BoxDecoration(
+            color: isSelected
+                ? AppColors.backgroundPrimaryColor
+                : AppColors.buttomColor,
+            border: Border.all(width: 1, color: Colors.transparent),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 6, right: 6),
+            child: Text(
+              label,
+              style: isSelected
+                  ? AppTextstyle.bodySecondaryText
+                  : AppTextstyle.bodySecondaryText,
+            ),
           ),
         ),
       ],
