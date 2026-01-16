@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/core/constants/widgets/custom_horizontal_calendar.dart';
+import 'package:test_app/features/home/presentation/screens/home_screen.dart';
 
 class CustomCalendar extends StatefulWidget {
   const CustomCalendar({super.key});
@@ -21,10 +23,23 @@ class _CustomCalendarState extends State<CustomCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(child: Column(children: [
-      Text("dia $currentDaysMonth"),
-      Text(_havActivity(nowDay).toString())
-      ]));
+    return SizedBox(
+      child: Column(
+        children: [
+          Text("dia $currentDaysMonth"),
+          Text(_havActivity(nowDay).toString()),
+          CustomHorizontalCalendar(
+            nowDay: nowDay,
+            daysWithActivity: daysWithActivity,
+            selectDaty: (fecha) {
+              setState(() {
+                nowDay = fecha;
+              });
+            }
+          ),
+        ],
+      ),
+    );
   }
 
   //ESTA FUNCION SE ENCARGA DE CARGAR LOS DIAS ACTUALES DEL MES
