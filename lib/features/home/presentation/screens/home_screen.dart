@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _setState = true;
-  bool _setButtonState = true;
+  // bool _setButtonState = true;
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 image: "assets/images/catHeader2.png",
                 selectedImage: "assets/images/catHeader2.png",
                 isSelected: true,
-                onTap: () {
-                  print("Michi presionado");
-                },
+                onTap: () {},
               ),
             ),
             const SizedBox(width: 10),
@@ -67,9 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 image: "assets/images/catHeader2.png",
                 selectedImage: "assets/images/catHeader2.png",
                 isSelected: true,
-                onTap: () {
-                  print("Michi presionado");
-                },
+                onTap: () {},
               ),
             ),
             const SizedBox(width: 10),
@@ -80,9 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 image: "assets/images/catHeader2.png",
                 selectedImage: "assets/images/catHeader2.png",
                 isSelected: true,
-                onTap: () {
-                  print("Michi presionado");
-                },
+                onTap: () {},
               ),
             ),
             const SizedBox(width: 10),
@@ -93,9 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 image: "assets/images/catHeader2.png",
                 selectedImage: "assets/images/catHeader2.png",
                 isSelected: true,
-                onTap: () {
-                  print("Michi presionado");
-                },
+                onTap: () {},
               ),
             ),
           ],
@@ -120,45 +112,62 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 8.0, left: 4, right: 4, bottom: 8),
+                    padding: EdgeInsets.only(
+                      top: 8.0,
+                      left: 4,
+                      right: 4,
+                      bottom: 8,
+                    ),
                     child: CustomCircleButtom(
                       buttonOnPressed: onTapButton,
                       buttomChild: Text("Primer O"),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 8.0, left: 4, right: 4, bottom: 8),
+                    padding: EdgeInsets.only(
+                      top: 8.0,
+                      left: 4,
+                      right: 4,
+                      bottom: 8,
+                    ),
                     child: CustomCircleButtom(
                       buttonOnPressed: onTapButton,
                       buttomChild: Text("Primer O"),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 8.0, left: 4, right: 4, bottom: 8),
+                    padding: EdgeInsets.only(
+                      top: 8.0,
+                      left: 4,
+                      right: 4,
+                      bottom: 8,
+                    ),
                     child: CustomCircleButtom(
                       buttonOnPressed: onTapButton,
                       buttomChild: Text("Primer O"),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 8.0, left: 4, right: 4, bottom: 8),
+                    padding: EdgeInsets.only(
+                      top: 8.0,
+                      left: 4,
+                      right: 4,
+                      bottom: 8,
+                    ),
                     child: CustomCircleButtom(
                       buttonOnPressed: onTapButton,
                       buttomChild: Text("Primer O"),
                     ),
                   ),
-                  
                 ],
               ),
             ),
           ),
-          CustomCalendar()
+          CustomCalendar(),
         ],
       ),
     );
   }
 }
 
-void onTapButton() {
-  print("tap");
-}
+void onTapButton() {}
