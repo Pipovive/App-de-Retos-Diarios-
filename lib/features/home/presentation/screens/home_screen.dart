@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/core/constants/app_colors.dart';
 
 import 'package:test_app/core/constants/widgets/custom_avatar_button.dart';
 import 'package:test_app/core/constants/widgets/custom_calendar.dart';
@@ -22,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundSecondaryColor,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(160),
         child: CustomHeadButton(
@@ -95,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: ListView(
         padding: const EdgeInsets.only(top: 80),
-        children: const [
+        children: [
           Padding(
             padding: EdgeInsets.all(8.0),
             child: SingleChildScrollView(

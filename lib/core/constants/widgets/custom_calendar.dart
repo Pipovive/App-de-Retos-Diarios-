@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/core/constants/app_TextStyle.dart';
+import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/core/constants/widgets/custom_horizontal_calendar.dart';
-import 'package:test_app/features/home/presentation/screens/home_screen.dart';
 
 class CustomCalendar extends StatefulWidget {
   const CustomCalendar({super.key});
@@ -10,46 +11,59 @@ class CustomCalendar extends StatefulWidget {
 }
 
 class _CustomCalendarState extends State<CustomCalendar> {
-  late final DateTime nowDay;
-  late final DateTime lastDay;
-
-  late final List<DateTime> currentDaysMonth;
+  DateTime nowDay = DateTime.now();
 
   @override
   void initState() {
-    _chargeDats();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Column(
-        children: [
-          Text("dia $currentDaysMonth"),
-          Text(_havActivity(nowDay).toString()),
-          CustomHorizontalCalendar(
-            nowDay: nowDay,
-            daysWithActivity: daysWithActivity,
-            selectDaty: (fecha) {
-              setState(() {
-                nowDay = fecha;
-              });
-            }
-          ),
-        ],
+    return ClipRRect(
+      borderRadius: BorderRadiusGeometry.only(
+        topLeft: Radius.circular(28),
+        topRight: Radius.circular(28),
       ),
-    );
-  }
-
-  //ESTA FUNCION SE ENCARGA DE CARGAR LOS DIAS ACTUALES DEL MES
-
-  void _chargeDats() {
-    nowDay = DateTime.now();
-    lastDay = DateTime(nowDay.year, nowDay.month + 1, 0);
-    currentDaysMonth = List.generate(
-      lastDay.day,
-      (index) => DateTime(nowDay.year, nowDay.month, index + 1),
+      child: Container(
+        decoration: BoxDecoration(color: AppColors.backgroundPrimaryColor),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 24.0, bottom: 0),
+              child: Stack(
+                alignment: AlignmentGeometry.center,
+                children: [
+                  Align(
+                    alignment: AlignmentGeometry.center,
+                    child: Text(
+                      "Dias Cumplidos",
+                      style: AppTextstyle.subTitleSecondaryText,
+                    ),
+                  ),
+                  Positioned(
+                    right: 10,
+                    child: Text(
+                      "Calendario",
+                      style: AppTextstyle.bodySecondaryText,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            CustomHorizontalCalendar(
+              selectedDate: nowDay,
+              daysWithActivity: daysWithActivity,
+              onDaySelected: (fecha) {
+                setState(() {
+                  nowDay = fecha;
+                });
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -68,7 +82,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
     return daysWithActivity.any(
       (day) =>
           day.year == date.year &&
-          day.month == date.year &&
+          day.month == date.month &&
           day.day == date.day,
     );
   }
