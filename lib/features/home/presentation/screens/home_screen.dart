@@ -7,6 +7,7 @@ import 'package:test_app/core/constants/widgets/custom_calendar.dart';
 import 'package:test_app/core/constants/widgets/custom_circle_buttom.dart';
 
 import 'package:test_app/core/constants/widgets/custom_head_button.dart';
+import 'package:test_app/core/constants/widgets/custom_tab_navigation_button.dart';
 // import 'package:test_app/core/constants/widgets/custom_head_button.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _selectIndex = 0;
   bool _setState = true;
   // bool _setButtonState = true;
 
@@ -167,6 +169,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           CustomCalendar(),
         ],
+      ),
+      bottomNavigationBar: CustomTabNavigationButton(
+        selectedIndex: _selectIndex,
+        valueChanged: (index) {
+          setState(() {
+            _selectIndex = index;
+          });
+        },
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/core/constants/app_TextStyle.dart';
 import 'package:test_app/core/constants/app_colors.dart';
+import 'package:intl/intl.dart';
 
 class CustomHorizontalCalendar extends StatefulWidget {
   final DateTime selectedDate; //
@@ -39,45 +40,45 @@ class _CustomHorizontalCalendarState extends State<CustomHorizontalCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime currentMonth =
-        widget.month ?? DateTime.now(); // ← Renombrado
-    final List<DateTime> daysOfMonth = _daysMonth(currentMonth); // ← Renombrado
+    final DateTime currentMonth = widget.month ?? DateTime.now();
+    final List<DateTime> daysOfMonth = _daysMonth(currentMonth);
 
-    return SizedBox(
-      height: 180,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Positioned(
-            left: 0,
-            right: 0,
-            top: 125,
-            child: SizedBox(height: 100, child: _buildContent()),
-          ),
-          ListView.builder(
-            controller: _scrollController,
-            scrollDirection: Axis.horizontal,
-            itemCount: daysOfMonth.length,
-            itemBuilder: (context, index) {
-              final day = daysOfMonth[index];
-              final isSelected = _isSameDay(
-                day,
-                widget.selectedDate,
-              ); // ← Renombrado
-              final isToday = _isSameDay(day, DateTime.now());
-              final hasActivity = _hasActivity(day);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        height: 180,
+        width: 380,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 125,
+              child: SizedBox(height: 50, child: _buildContent()),
+            ),
+            ListView.builder(
+              controller: _scrollController,
+              scrollDirection: Axis.horizontal,
+              itemCount: daysOfMonth.length,
+              itemBuilder: (context, index) {
+                final day = daysOfMonth[index];
+                final isSelected = _isSameDay(day, widget.selectedDate);
+                final isToday = _isSameDay(day, DateTime.now());
+                final hasActivity = _hasActivity(day);
 
-              return _DayItem(
-                // ← Capitalizado (convención para clases)
-                day: day,
-                isSelected: isSelected, // ← Renombrado
-                isToday: isToday,
-                hasActivity: hasActivity,
-                onTap: () => widget.onDaySelected(day), // ← Renombrado
-              );
-            },
-          ),
-        ],
+                return _DayItem(
+                  // ← Capitalizado (convención para clases)
+                  day: day,
+                  isSelected: isSelected,
+                  isToday: isToday,
+                  hasActivity: hasActivity,
+                  onTap: () => widget.onDaySelected(day),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -108,21 +109,37 @@ class _CustomHorizontalCalendarState extends State<CustomHorizontalCalendar> {
   }
 
   Widget _buildContent() {
-    final havActivity = _hasActivity(DateTime.now());
-    
+    final havActivity = _hasActivity(widget.selectedDate);
+    final time = DateFormat('HH:mm').format(widget.selectedDate);
+
     return Container(
       decoration: BoxDecoration(
         color: AppColors.tertiaryColor,
         shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(26),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            havActivity
-                ? "Ya resolviste la activdade hoy, felicidades"
-                : "Todavia no haz hecho ninguna trivia :(",
-            style: AppTextstyle.bodyText,
+          Padding(
+            padding: const EdgeInsets.all(13.0),
+            child: Row(
+              children: [
+                Text(
+                  havActivity
+                      ? "Actividad Realizada"
+                      : "Todavia no haz hecho ninguna trivia :(",
+                  style: AppTextstyle.bodyText,
+                  textAlign: TextAlign.start,
+                ),
+                Spacer(),
+                Text(
+                  havActivity ? time : "",
+                  style: AppTextstyle.bodyText,
+                  textAlign: TextAlign.end,
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -157,17 +174,17 @@ class _CustomHorizontalCalendarState extends State<CustomHorizontalCalendar> {
 class _DayItem extends StatelessWidget {
   // ← Capitalizado
   final DateTime day;
-  final bool isSelected; // ← Renombrado
+  final bool isSelected;
   final bool isToday;
   final bool hasActivity;
-  final VoidCallback onTap; // ← Renombrado
+  final VoidCallback onTap;
 
   const _DayItem({
     required this.day,
-    required this.isSelected, // ← Renombrado
+    required this.isSelected,
     required this.isToday,
     required this.hasActivity,
-    required this.onTap, // ← Renombrado
+    required this.onTap,
   });
 
   @override
@@ -176,7 +193,7 @@ class _DayItem extends StatelessWidget {
     final dayNameWeek = daysWeeks[day.weekday - 1];
 
     return GestureDetector(
-      onTap: onTap, // ← Renombrado
+      onTap: onTap,
       child: Container(
         width: 60,
         margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -188,7 +205,7 @@ class _DayItem extends StatelessWidget {
               style: TextStyle(
                 color: isSelected
                     ? AppColors.tertiaryColor
-                    : AppColors.secondaryColor, // ← Renombrado
+                    : AppColors.secondaryColor,
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
               ),
@@ -198,15 +215,15 @@ class _DayItem extends StatelessWidget {
               width: 45,
               height: 45,
               decoration: BoxDecoration(
-                color:
-                    isSelected // ← Renombrado
+                color: isSelected
                     ? AppColors.tertiaryColor
                     : Colors.transparent,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
+                ),
                 border: Border.all(
-                  color: isToday
-                      ? AppColors.secondaryColor
-                      : Colors.transparent,
+                  color: isToday ? AppColors.tertiaryColor : Colors.transparent,
                   width: 2,
                 ),
               ),

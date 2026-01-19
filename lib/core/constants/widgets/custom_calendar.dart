@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/core/clippers/wabe_clipper.dart';
 import 'package:test_app/core/constants/app_TextStyle.dart';
 import 'package:test_app/core/constants/app_colors.dart';
 import 'package:test_app/core/constants/widgets/custom_horizontal_calendar.dart';
@@ -31,35 +32,47 @@ class _CustomCalendarState extends State<CustomCalendar> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 24.0, bottom: 0),
+              padding: const EdgeInsets.only(top: 4.0, bottom: 0),
               child: Stack(
-                alignment: AlignmentGeometry.center,
+                alignment: AlignmentGeometry.topCenter,
                 children: [
-                  Align(
-                    alignment: AlignmentGeometry.center,
+                  Positioned(
+                    top: 11,
                     child: Text(
                       "Dias Cumplidos",
                       style: AppTextstyle.subTitleSecondaryText,
                     ),
                   ),
                   Positioned(
-                    right: 10,
+                    top: 15,
+                    right: 2,
                     child: Text(
                       "Calendario",
                       style: AppTextstyle.bodySecondaryText,
                     ),
                   ),
+                  CustomHorizontalCalendar(
+                    selectedDate: nowDay,
+                    daysWithActivity: daysWithActivity,
+                    onDaySelected: (fecha) {
+                      setState(() {
+                        nowDay = fecha;
+                      });
+                    },
+                  ),
                 ],
               ),
             ),
-            CustomHorizontalCalendar(
-              selectedDate: nowDay,
-              daysWithActivity: daysWithActivity,
-              onDaySelected: (fecha) {
-                setState(() {
-                  nowDay = fecha;
-                });
-              },
+            Container(
+              decoration: BoxDecoration(
+                color: AppColors.backgroundSecondaryColor
+              ),
+              child: Image.asset(
+                "assets/images/splash1new.png",
+                height: 230,
+                fit: BoxFit.cover,
+                // color: AppColors.backgroundSecondaryColor,
+              ),
             ),
           ],
         ),
